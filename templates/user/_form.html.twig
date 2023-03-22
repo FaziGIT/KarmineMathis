@@ -1,0 +1,61 @@
+{% set route = app.request.attributes.get('_route') %}
+
+  
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    {{ form_start(form, {'attr':{'class':'form-material'}}) }}
+
+        <div class="grix xs1 md3 lg6 gutter-xs7">
+
+            <div class="form-field">
+                {{form_label(form.nom)}}
+                
+                {{ form_widget(form.nom, {'attr':{'class':'form-control'}}) }}
+            </div>
+
+            <div class="form-field">
+                {{form_label(form.prenom)}}
+                
+                {{ form_widget(form.prenom, {'attr':{'class':'form-control'}}) }}
+            </div>
+
+            <div class="form-field">
+                {{form_row(form.sexe)}}
+            </div>
+
+            <div class="form-field col-xs3 col-lg3 col-md2 row-lg4 row-sm3 row-md2 bd-black bd-solid bd-3 p-5 rounded-2 avatar-form">
+                <div>
+                    <img class="responsive-media mb-2 bd-black bd-solid bd-3 image-avatar-form" src="/images/avatar/{{form.avatar.vars.value}}" alt="Photo de profil" id="avatarAffichee">
+                </div>
+                <div>
+                    {{form_row(form.avatarFile)}}
+                    {{form_errors(form.avatarFile)}}
+                    <a id="uploadAvatar" class="btn btn-upload-image shadow-1 primary rounded-4 btn-large primary mr-2 px-5">
+                        <span class="iconify-inline font-s7 mr-2" data-icon="material-symbols:cloud-upload">
+                        </span> Déposer une image
+                        <span class="iconify-inline font-s7 ml-2" data-icon="material-symbols:cloud-upload">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider  my-3"></div>
+            <a href="{{ path('accueil') }}" class="btn btn-list shadow-1 primary rounded-4 btn-large primary mr-2">Revenir à l'accueil</a>
+            <a href="{{ path('app_user_profil') }}" class="btn btn-edit shadow-1 primary rounded-4 btn-large primary mr-2">Voir votre profil</a>
+
+
+            <div class="float-right">      
+                <button type="submit" class="btn btn-register shadow-1 primary rounded-4 btn-large primary mr-2 px-5">Modifier</button>
+            </div>
+
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset("js/gestionUpload.js")}}" defer></script>
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche du Sponsor{% endblock %}
+
+{% block body %}
+    <h1>Fiche du Sponsor</h1>
+
+    <div class="card shadow-1 fx-row white bd-5 bd-r-solid bd-black rounded-4">
+        <div class="d-flex vcenter fx-center bd-t-5 bd-r-solid bd-black" style="background-color: grey;width: 400px">
+            <img data-ax="lightbox" id="example-lightbox" class="sponsor-detail-img lightbox responsive-media" src="{{sponsor.image}}" alt="picsum" />
+        </div>
+
+        <div class="d-flex fx-col fx-grow">
+            <div class="card-header">
+                <span>Nom : {{sponsor.nom}}</span>
+            </div>
+            <div class="card-content">
+                <span>Description : {{sponsor.description}}</span>
+            </div>
+            <div class="card-footer">
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('sponsor_edit', {'id': sponsor.id}) }}" class=" btn btn-edit  shadow-1 primary rounded-4 btn-large primary mr-2">Modifier</a>
+                    {{ include('sponsor/_delete_form.html.twig') }}
+                {% endif %}
+
+                <a href="{{ path('sponsor') }}" class="btn btn-list shadow-1 primary rounded-4 btn-large primary ml-2">Revenir à la liste</a>
+                </div>
+            </div>
+    </div>
+
+
+{% endblock %}

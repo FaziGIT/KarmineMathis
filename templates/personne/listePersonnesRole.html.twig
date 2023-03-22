@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personne index{% endblock %}
+
+{% block body %}
+    <h1>Personne</h1>
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <div class="d-flex">
+            <a href="{{ path('app_personne_new') }}" class="btn btn-small rounded-1 blue dark-3 btn-press ml-auto p-2">Ajouter une personne</a>
+        </div>
+    {% endif %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Pseudo</th>
+                <th>Sexe</th>
+                <th>DateNaissance</th>
+                <th>Nationalite</th>
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    <th>actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for personne in personnes %}
+            <tr>
+                <td><img style="height:100px; width:100px; border-radius:20%;" src="{{ personne.image }}" alt=""></td>
+                <td>{{ personne.prenom }}</td>
+                <td>{{ personne.nom }}</td>
+                <td>{{ personne.pseudo }}</td>
+                {% if personne.sexe == 0 %}
+                    <td>Homme</td> 
+                {% else %}
+                    <td>Femme</td> 
+                {% endif %}
+                <td>{{ personne.dateNaissance ? personne.dateNaissance|date('d/m/y') : '' }}</td>
+                 <td>{{ personne.nationalite }} 
+                                {% if personne.nationalite == 'Francais' %}
+                                    <img style="height: 15px; width: 15px;"src="/images/logo/fra.webp" alt="fra">
+                                {% endif %}
+
+                                {% if personne.nationalite =='Belge' %}
+                                    <img style="height: 15px; width: 15px;"src="/images/logo/bel.webp" alt="bel">
+                                {% endif %}
+
+                                {% if personne.nationalite == 'Marocain' %}
+                                    <img style="height: 15px; width: 15px;"src="/images/logo/mar.png" alt="mar">
+                                {% endif %}
+                            </td>
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a class="btn btn-small rounded-1 airforce dark-3 btn-press" href="{{ path('app_personne_show', {'id': personne.id}) }}"><i class="fas fa-eye"></i></a>
+                            <a class="btn btn-small rounded-1 airforce dark-3 btn-press" href="{{ path('app_personne_edit', {'id': personne.id}) }}"><i class="fas fa-pen"></i></a>
+                    </td>
+                {% endif %}
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">Pas de joueurs trouvés</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

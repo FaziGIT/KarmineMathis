@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="{{asset('images/logo/karmine2.avif')}}" alt="Karmine">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <!-- Axentix CSS minified version -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@2.2.1/dist/axentix.min.css">
+        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{asset('css/scrollbar.css')}}">
+        <script src="https://kit.fontawesome.com/821e10c733.js" crossorigin="anonymous"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=Poppins:wght@700&family=Roboto:wght@900&display=swap');
+        </style>
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+        {% endblock %}
+
+        
+    </head>
+    <body>
+        <nav class="navbar shadow-1 primary pb-2">
+            <a href="{{path('accueil')}}" class="navbar-logo navbar-centered">
+                <img src="{{asset('images/logo/karmine2.avif')}}" class="py-1 dropshadow-5" alt="Karmine" />
+            </a>
+            <div class="pb-3">
+                <a href="{{path('accueil')}}" class="navbar-brand">Karmine</a>
+            </div>
+            <div class="navbar-menu ml-auto pb-3">
+                <a class="navbar-link" href="{{path('competition')}}">Compétitions</a>
+                <div class="dropdown" id="personneDD">
+                    <div class="navbar-link" data-target="personneDD">
+                        Personnes &#155;
+                    </div>
+                    <div class="dropdown-content dropdown-right white shadow-1">
+                        <a class="dropdown-item" href="{{ path('app_personne_index') }}">Toutes les personnes</a>
+                        <div class="divider"></div>
+                        <a class="dropdown-item" href="{{ path('filtreRole', {'role': "joueur"}) }}">Joueurs</a>
+                        <a class="dropdown-item" href="{{ path('filtreRole', {'role': "ceo"}) }}">CEO</a>
+                        <a class="dropdown-item" href="{{ path('filtreRole', {'role': "coach"}) }}">Coachs</a>
+                    </div>
+                </div>
+                <div class="dropdown" id="equipeDD">
+                    <div class="navbar-link" data-target="equipeDD">
+                        Équipes & jeux &#155;
+                    </div>
+                    <div class="dropdown-content dropdown-right white shadow-1">
+                        <a class="dropdown-item" href="{{ path('app_equipe_index')}}">Toutes les équipes</a>
+                        <div class="divider"></div>
+                        <a class="dropdown-item" href="{{ path('app_jeu_index')}}">Tous les jeux</a>
+                    </div>
+                </div>
+                <a class="navbar-link" href="{{path('sponsor')}}">Sponsors</a>
+                {# A mettre si noé et jerem publient leurs sites <a class="navbar-link" href="http://172.16.15.75:8000" target="_blank">Boutique</a> #}
+                <a class="navbar-link" href="https://karmineshop.com/" target="_blank">Boutique</a>
+                <a class="navbar-link connect" data-target="sidebar" class="btn rounded-1 btn-press primary">
+                    {% if app.user %}
+                    {#  #}
+                        {# <img class="super-mini-pp responsive-media" src="{{ app.user.avatar }}" alt="Photo de profil"> #}
+                        <img class="super-mini-pp responsive-media" src="{{asset("images/avatar/" ~ app.user.avatar )}}" alt="Photo de profil">
+                        Profil
+                    {% else %}
+                        Connexion
+                    {% endif %}
+                </a>
+                {# BOUTON LIGHT MODE include('include/switchlightmode.html.twig') }} #} 
+            </div>
+
+            <button class="btn transparent text-white hide-sm-up font-s5 ml-auto hide-sm-up" aria-label="Menu button">
+                <span class="iconify-inline" data-icon="mdi:menu"></span>
+            </button>
+        </nav>
+
+{% block before %}
+
+{% endblock %}
+
+            {% block body %}
+                {% for label, messages in app.flashes %}
+                    <div class="p-3 my-2 rounded-1 {{label}} light-4 text-green text-dark-4 bd-solid bd-green bd-dark-1 bd-1">
+                        {% for message in messages %}
+                            <p> {{message}} </p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                 <script>
+                        console.log(message);
+                    </script>
+              {% endblock %}
+    </body>
+{{ include('include/_sidenav.html.twig') }}
+    
+
+    <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/axentix@2.2.1/dist/axentix.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+        <script src="https://code.iconify.design/3/3.0.0/iconify.min.js"></script>
+        <!-- Axentix JS minified version -->
+        <script>
+            // NOTE: this is NOT to be used if data-ax="dropdown" is set in your HTML
+            let personneDD = new Axentix.Dropdown('#personneDD');
+            let equipeDD = new Axentix.Dropdown('#equipeDD');
+
+
+            // CREER LA SIDEBAR (Pas besoin)
+            // let Sidenav = new Axentix.Sidenav('#sidebar',{
+            //     bodyScrolling: true,
+            //     animationDuration: 500
+            // });
+
+        </script>
+        
+        {% block javascripts %}
+        <!-- JavaScript Bundle with Popper -->
+        {% endblock %}
+</html>
+

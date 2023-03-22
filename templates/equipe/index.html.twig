@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Equipe index{% endblock %}
+
+{% block body %}
+{% if app.user and is_granted("ROLE_ADMIN") %}
+    <a href="{{ path('app_equipe_new')}}" class=" btn btn-add-absolute shadow-1 primary rounded-4 btn-large primary ml-2 mt-2 mr-2">Ajouter une équipe</a>
+{% endif %}
+    <h1>Liste des équipes</h1>
+
+    {% for equipe in equipes %}
+    <div class="card white light-shadow-2 p-3 rounded-2">
+        <div class="table-responsive" style="border-radius:20%;">
+            <table class="table">
+                <thead>
+                    <tr class="text-grey text-dark-4 tr-equipe">
+                        <th class="text-center">Image du Roster</th>
+                        <th class="text-center">Nom</th>
+                        <th class="text-center">Jeu Associé</th>
+                        <th class="text-center">Image du jeu</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:center;" class="col-3"><img style="border-radius:20%;" class="responsive-media" src="{{ equipe.image }}" alt="Image du roster"></td>
+                        <td style="text-align:center;" class="col-2 element-tableau"><h5 class="truncate">{{ equipe.nom }}</h5></td>
+                        <td style="text-align:center;" class="col-2 element-tableau">
+                            <h6 class="underline"><a target="_blank" href="{{ path('app_jeu_show', {'id': equipe.leJeu.id}) }}">{{ equipe.leJeu.nom }}</a></h6>
+                            {# <span class="text-grey">{{ equipe.leCoach.nom }}</span> #}
+                        </td>
+                        <td style="text-align:center;" class="col-1 element-tableau"><img class="super-mini-jeu responsive-media bd-blue bd-solid bd-3" src="{{ equipe.leJeu.image }}" alt="Image du jeu"></td>
+
+                        <td style="text-align:center;" class="col-4 mx-auto element-tableau">
+                            <a href="{{ path('app_equipe_show', {'id': equipe.id}) }}" class=" btn btn-detail  shadow-1 primary rounded-4 btn-small primary mr-2">Détail</a>
+                        {% if app.user and is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('app_equipe_edit', {'id': equipe.id}) }}" class=" btn btn-edit  shadow-1 primary rounded-4 btn-small primary mr-2">Modifier</a>
+                        {% endif %}
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucune équipes trouvés</td>
+            </tr>
+        {% endfor %}
+
+    <div class="navigation">
+        {{ knp_pagination_render(equipes) }}
+    </div>
+            
+{% endblock %}

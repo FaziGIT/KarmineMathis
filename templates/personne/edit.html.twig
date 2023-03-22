@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personne{% endblock %}
+
+{% block body %}
+    <h1>Modifier une personne</h1>
+
+    {{ include('personne/_form.html.twig', {'button_label': 'Sauvegarder'}) }}
+
+    <div>
+        <a class="btn btn-small rounded-1 grey dark-1 btn-press mt-1" href="{{ path('app_personne_index') }}"><i class="fas fa-arrow-left "></i> Retour</a>
+        {{ include('personne/_delete_form.html.twig') }}
+    </div>
+
+
+{% endblock %}

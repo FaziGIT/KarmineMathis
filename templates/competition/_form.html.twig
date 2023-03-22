@@ -1,0 +1,39 @@
+{{ form_start(form, {'attr':{'class':'form-material'}})}}
+
+<div class="form-field">
+    {{form_label(form.nom)}}
+    {{form_widget(form.nom, {'attr':{'class':'form-control'}})}}
+</div>
+
+<div class="form-field">
+<span>Statut</span>
+    {{form_row(form.Statut)}}
+</div>
+<div class="row">
+    <div class="col-3">
+        <span>Date début</span>
+        {{form_row(form.dateDebut)}}
+    </div>
+    <div class="col-3">
+        <span>Date fin</span>
+        {{form_row(form.dateFin)}}
+    </div>  
+</div>
+
+<div class="form-field">
+    {{form_label(form.gainPossible)}}
+    {{form_widget(form.gainPossible, {'attr':{'class':'form-control'}})}}
+</div>
+
+
+<div class="form-field">
+<span>Équipe</span>
+    {{form_row(form.equipe)}}
+</div>
+
+
+
+    {{ form_widget(form) }}
+
+    <button class="btn btn-small rounded-1 green dark-2 btn-primary mt-2"><i class="fas fa-check"></i>{{ button_label|default(' Save') }}</button>
+{{ form_end(form) }}

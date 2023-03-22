@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Connexion!{% endblock %}</title>
+        <link rel="icon" href="{{asset('images/logo/karmine2.avif')}}" alt="Karmine">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <!-- Axentix CSS minified version -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@2.2.1/dist/axentix.min.css">
+        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{asset('css/scrollbar.css')}}">
+        <script src="https://kit.fontawesome.com/821e10c733.js" crossorigin="anonymous"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=Poppins:wght@700&family=Roboto:wght@900&display=swap');
+        </style>
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+        {% endblock %}
+
+        
+    </head>
+    
+    {% set route = app.request.attributes.get('_route') %}
+
+    <body>
+        <nav class="navbar shadow-1 primary" aria-label = "example navbar">
+            <a href="{{path('accueil')}}" class="navbar-logo mb-1 navbar-centered">
+                <img src="{{asset('images/logo/karmine2.avif')}}" class="py-1 dropshadow-5" alt="Karmine" />
+            </a>
+            <div class="pb-3">
+                <a href="{{path('accueil')}}" class="navbar-brand">Karmine</a>
+            </div>
+            <div class="navbar-menu ml-auto pb-3">
+                    <a href="{{path('app_login')}}"class="navbar-link" data-target="sidebar" class="btn rounded-1 btn-press primary">
+                        Se connecter
+                    </a>
+                    <a href="{{path('app_register')}}"class="navbar-link" data-target="sidebar" class="btn rounded-1 btn-press primary">
+                        S'inscrire
+                    </a>
+            </div>
+
+            {# <button class="btn transparent text-white hide-md-up font-s5 ml-auto" aria-label="Menu button">
+                <span class="iconify-inline" data-icon="mdi:menu"></span>
+            </button> #}
+        </nav>
+
+{% block before %}
+
+{% endblock %}
+
+        <div class="container mt-3">
+            {% block body %}
+            {% endblock %}
+        </div> 
+    </body>
+{# {{ include('include/_sidenav.html.twig') }} #}
+    
+
+    <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/axentix@2.2.1/dist/axentix.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+        <script src="https://code.iconify.design/3/3.0.0/iconify.min.js" defer></script>
+        <!-- Axentix JS minified version -->
+        {% block javascripts %}
+    <script src="{{asset("js/gestionUpload.js")}}" defer></script>
+{% endblock %}
+</html>
+

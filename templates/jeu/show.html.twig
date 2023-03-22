@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeu{% endblock %}
+
+{% block body %}
+
+    <h1 class="white"> {{jeu.nom}} </h1>
+    <div class="divider mb-3"></div>
+            <div class="card card-param-fiche airforce dark-4 rounded-5 shadow-1 mx-auto bd-solid bd-black bd-5">
+                <div class="card-image">
+                    <img class="card-image-fiche-jeu" src="{{jeu.image}}"alt="Image du jeu {{jeu.nom}}" />
+                </div>
+
+                <div class="card-content">
+                    <span class="h3 categorie-jeu">Categorie(s) :
+                        {% for laCat in jeu.lesCategories %}
+                            <a class="underline" href="{{ path('app_categorie_jeu_show', {'id': laCat.id}) }}">{{ laCat.libelle }}</a>
+                            {% if not loop.last %} - {% endif %}
+                        {% endfor %}
+                    </span>
+                    <div class="font-s3 text-grey text-light-2 mt-5">{{jeu.description}}</div>
+                </div>
+
+                    <div class="card-footer mt-1 mx-auto">
+                        {% if app.user and is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('app_jeu_edit', {'id': jeu.id}) }}" class=" btn btn-edit  shadow-1 primary rounded-4 btn-large primary mr-2">Modifier</a>
+                
+                            {{ include('jeu/_delete_form.html.twig') }}
+                        {% endif %}
+                            <a href="{{ path('app_jeu_index') }}" class="btn btn-list shadow-1 primary rounded-4 btn-large primary ml-2 ">Revenir à la liste</a>
+                    </div>
+
+
+             </div>
+{% endblock %}

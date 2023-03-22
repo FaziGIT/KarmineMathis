@@ -1,0 +1,35 @@
+<div class="sidenav sidenav shadow-1 white" id="sidebar" data-ax="sidenav">
+  <div class="sidenav-header">
+       {% include('include/switchlightmode.html.twig') %}
+  </div>
+  {# {% if app.user %} #}
+    <h6 style="text-align: center;">
+      Bonjour, {{app.user.prenom}}
+    </h6>
+
+    <img id="photoprofil" class=" mini-pp responsive-media" src="{{asset("images/avatar/" ~ app.user.avatar )}}" alt="Photo de profil">
+
+    <a href="{{path('app_user_profil')}}" class="sidenav-link active sidenav-link-connect mt-3">Voir votre profil</a>
+
+    <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="sidenav-link sidenav-link-connect mt-3">Modifier votre profil</a>
+
+    <a href="{{path('app_forgot_password_request')}}" class="sidenav-link sidenav-link-reset mt-3">Changer votre mot de passe</a>
+  {# {% else %}
+    <a href="{{path('app_login')}}" class="sidenav-link active sidenav-link-connect">Se connecter</a>
+    <div class="divider"></div>
+    <a href="{{path('app_register')}}" class="sidenav-link sidenav-link-connect">S'inscrire</a>
+  {% endif %} #}
+  
+  
+  
+  {# {% if app.user %} #}
+    <div class="sidenav-footer red light-1">
+      <a href="{{path('app_logout')}}" class="sidenav-link sidenav-link-logout">Se déconnecter <span class="iconify-inline font-s2" data-icon="material-symbols:logout"></span></a>
+    </div>
+  {# {% else %}
+    <div class="sidenav-footer cyan light-1">
+      BLUE WALL
+    </div>
+  {% endif %} #}
+  
+</div>

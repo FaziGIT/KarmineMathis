@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CategorieJeu index{% endblock %}
+
+{% block body %}
+
+{% if app.user and is_granted("ROLE_ADMIN") %}
+    <a href="{{ path('app_categorie_jeu_new')}}" class=" btn btn-add-absolute shadow-1 primary rounded-4 btn-large primary ml-2 mt-2 mr-2">Ajouter une catégorie</a>
+{% endif %}
+
+    <h1>Liste des catégories</h1>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-centered">
+            <thead>
+                <tr>
+                    <th class="col-8">Libellé</th>
+                    <th class="col-4">Actions</th> 
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for laCat in categorie_jeus %}
+                    <tr>
+                        <td class="col-8">{{laCat.libelle}}</td>
+                            <td class="col-4">
+
+                                <a href="{{ path('app_categorie_jeu_show', {'id': laCat.id}) }}" class=" btn btn-detail  shadow-1 primary rounded-4 btn-small primary mr-2">Détail</a>
+                                
+                                {% if app.user and is_granted("ROLE_ADMIN") %}
+                                    <a href="{{ path('app_categorie_jeu_edit', {'id': laCat.id}) }}" class=" btn btn-edit  shadow-1 primary rounded-4 btn-small primary mr-2">Modifier</a>
+                                {% endif %}
+                            </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="navigation">
+        {{ knp_pagination_render(categorie_jeus) }}
+    </div>
+
+{% endblock %}

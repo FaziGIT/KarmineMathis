@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Sponsor{% endblock %}
+
+{% block body %}
+    <h1>Modifier {{sponsor.nom}}</h1>
+        {{ include('sponsor/_form.html.twig') }}
+
+        
+        
+{% endblock %}
+
+{# {% block javascripts %}
+    {% include "include/_modalDelete.html.twig" %}
+{% endblock %} #}

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Equipe{% endblock %}
+
+{% block body %}
+    <h1>Modifier l'équipe "{{equipe.nom}}"</h1>
+    {% if app.user and is_granted("ROLE_ADMIN") %}
+        {{ include('equipe/_form.html.twig')}}
+    {% endif %}
+{% endblock %}

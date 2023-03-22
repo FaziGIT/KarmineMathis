@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Competition{% endblock %}
+
+{% block body %}
+    <h1>Crée une compétition</h1>
+
+    {{ include('competition/_form.html.twig') }}
+
+    
+    <button class="btn btn-small rounded-1 airforce dark-2 btn-primary mt-2"><i class="fas fa-check"></i><a href="{{ path('competition') }}"> Retour a la liste</a></button>
+
+{% endblock %}

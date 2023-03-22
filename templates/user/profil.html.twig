@@ -1,0 +1,50 @@
+{% extends 'baseWithoutContainer.html.twig' %}
+
+{% block title %}Profil!{% endblock %}
+
+{% block body %}
+
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div class="container_ovale">
+    <div class="example-wrapper">
+            <img data-ax="lightbox" data-lightbox-caption="Photo de profil" id="photoprofil" class="img_profil mini-pp lightbox responsive-media" src="{{asset("images/avatar/" ~ app.user.avatar )}}" alt="Photo de profil">
+            <div class="container_line">
+                <div class="profil_info pt-2 ">
+                    <h2 class="profil">Hello {{ app.user.prenom }} ! </h2>
+                    <div class="row ">
+                        <div class="col-6 text-right">Votre nom de famille : </div>
+                        <div class="col-6 text-left">{{ app.user.NOM }} </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 text-right">Votre sexe : </div>
+                        <div class="col-6 text-left">
+                            {% if app.user.sexe == 1 %}
+                                Homme
+                            {% else %}
+                                Femme
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 text-right">Votre adresse email est : </div>
+                        <div class="col-6 text-left">{{ app.user.email }}</div>
+                    </div>
+                            
+                </div>
+
+                <div class="text-center pt-5">      
+                    <a href="{{ path('user_edit', {'id': app.user.id}) }}" class="btn btn-register shadow-1 primary rounded-4 btn-large primary mr-2 px-5">Modifier</a>
+                </div>
+
+            </div>
+    </div>
+</div>
+{% endblock %}

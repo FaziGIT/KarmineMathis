@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CategorieJeu{% endblock %}
+
+{% block body %}
+    <h1>Modifier {{categorie_jeu.libelle}}</h1>
+
+    {{ include('categorie_jeu/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

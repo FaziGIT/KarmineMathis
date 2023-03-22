@@ -1,0 +1,40 @@
+{% set route = app.request.attributes.get('_route') %}
+
+{{ form_start(form, {'attr':{'class':'form-material'}})}}
+
+<div class="form-field">
+    {{form_label(form.nom)}}
+    {{form_widget(form.nom, {'attr':{'class':'form-control'}})}}
+</div>
+
+{# <div class="form-field">
+    {{form_row(form.lesCategories)}}
+</div> #}
+
+<div class="form-field">
+    {# {{form_label(form.lesCategories)}} #}
+    {{form_widget(form.lesCategories)}}
+</div>
+
+<div class="form-field">
+    {{form_label(form.description)}}
+    {{form_widget(form.description, {'attr':{'class':'form-control'}})}}
+</div>
+
+<div class="form-field">
+    {{form_label(form.image)}}
+    {{form_widget(form.image, {'attr':{'class':'form-control'}})}}
+</div>
+
+    <div class="mt-3">
+        {% if route =="app_jeu_new" %}
+                <button class="btn btn-update shadow-1 primary rounded-4 btn-large primary mr-2">Ajouter</button>
+        {% elseif route =="app_jeu_edit"%}
+                <button href="{{ path('app_jeu_edit', {'id': jeu.id}) }}" class=" btn btn-edit  shadow-1 primary rounded-4 btn-large primary mr-2">Modifier</button>
+        {% endif %}
+        
+         <div style="float: right;">
+            <a href="{{ path('app_jeu_index') }}" class="btn btn-list shadow-1 primary rounded-4 btn-large primary mr-2">Revenir à la liste</a>
+        </div>
+    </div>
+{{ form_end(form) }}

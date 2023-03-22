@@ -1,0 +1,4 @@
+<form style="display:inline;" method="post" action="{{ path('competition_delete', {'id': competition.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ competition.id) }}">
+    <button class="btn btn-small rounded-1 amaranth dark-3 btn-press"><i class="fas fa-trash"></i> </button>
+</form>

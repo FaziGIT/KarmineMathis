@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Jeu{% endblock %}
+
+{% block body %}
+    <h1>Modifier {{jeu.nom}}</h1>
+
+    {{ include('jeu/_form.html.twig')}}
+
+{% endblock %}

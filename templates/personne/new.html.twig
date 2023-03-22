@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personne{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une Personne</h1>
+
+    {{ include('personne/_form.html.twig') }}
+
+
+    <a class="btn btn-primary btn-sm" href="{{ path('app_personne_index') }}">Retour</a>
+{% endblock %}

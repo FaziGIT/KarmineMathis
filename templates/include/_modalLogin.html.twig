@@ -1,0 +1,40 @@
+<div class="modal modal-bouncing white rounded-2 shadow-1" id="modal-login" data-ax="modal" style="max-width: 400px;">
+  <div class="modal-header text-center pb-1 pt-4">
+    Welcome back <strong>dear</strong>
+  </div>
+
+  <div class="modal-content">
+    <form class="form-material form-material-bordered">
+      <div class="form-field">
+        <input type="text" id="pseudo" class="form-control rounded-4">
+        <label for="pseudo">Pseudo</label>
+      </div>
+      <div class="form-field">
+        <input type="password" id="password" class="form-control rounded-4">
+        <label for="password">Password</label>
+      </div>
+      <div class="form-field">
+        <label class="form-check">
+          <input type="checkbox" value="check" class="rounded-1">
+          <span>Remember me</span>
+        </label>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer d-flex pt-2">
+    <button class="btn btn-small red light-4 text-red rounded-2 ml-auto mr-2" data-target="modal">Cancel</button>
+    <button class="btn btn-small blue rounded-2">Login</button>
+  </div>
+</div>
+
+
+<script>
+        let modal = new Axentix.Modal('#modal-login',{
+            overlay: false,
+            animationDuration: 500
+        });
+
+        // Syntax : modal.{method}
+        modal.open();
+</script>

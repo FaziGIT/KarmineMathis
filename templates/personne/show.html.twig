@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personne{% endblock %}
+
+{% block body %}
+    <h1>Fiche de {{ personne.pseudo }}</h1>
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table">
+                        <tr>
+                            <th>Prenom</th>
+                            <td>{{ personne.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Pseudo</th>
+                            <td>"{{ personne.pseudo }}"</td>
+                        </tr>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ personne.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Sexe</th>
+                            {% if personne.sexe == 0 %}
+                                <td>Homme</td> 
+                            {% else %}
+                                <td>Femme</td> 
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Role</th>
+                            <td>{{ personne.role }}</td>
+                        </tr>
+                        <tr>
+                            <th>DateNaissance</th>
+                            <td>{{ personne.dateNaissance ? personne.dateNaissance|date('d/m/Y') : '' }}</td>
+                        </tr>
+                        <th>Nationalité</th>
+                        <td>{{ personne.nationalite }} 
+                            {% if personne.nationalite == 'Francais' %}
+                                <img style="height: 15px; width: 15px;"src="/images/logo/fra.webp" alt="fra">
+                            {% endif %}
+
+                            {% if personne.nationalite =='Belge' %}
+                                <img style="height: 15px; width: 15px;"src="/images/logo/bel.webp" alt="bel">
+                            {% endif %}
+
+                            {% if personne.nationalite == 'Marocain' %}
+                                <img style="height: 15px; width: 15px;"src="/images/logo/mar.png" alt="mar">
+                            {% endif %}
+                        <tr>
+                            <th>Liquipedia</th>
+                            <td> <a style="text-decoration:underline;" href="{{ personne.liquipedia }}">Lien liquipedia</a></td>
+                        </tr>
+                        
+                        <tr>
+                            {% if personne.coach != null %}
+                            <th>
+                                Coach pour
+                            </th>
+                                <td>
+                                    <a style="text-decoration:underline;"href="{{ path('app_equipe_show', {'id': personne.coach.id}) }}">{{personne.coach}}</a>
+                                </td>
+                            {% endif %}
+                            {% if personne.joueur != null %}
+                            <th>
+                                Joueur pour 
+                            </th>
+                                <td>
+                                    <a style="text-decoration:underline;"href="{{ path('app_equipe_show', {'id': personne.joueur.id}) }}">{{personne.joueur}}</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+
+
+                </table>
+            </div>
+        </div>
+        <div class="col">
+            <div class="table-responsive">
+                <table class="table">
+                        <tr>
+                            <td><img src="{{ personne.image }}" alt="image" style="margin:auto;display:block;width:400px;height:400px;border-radius:30%;"> </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <a href="" </a>
+
+        <a class="btn btn-small rounded-1 grey dark-1 btn-press" href="{{ path('app_personne_index') }}"><i class="fas fa-arrow-left "></i></a>
+
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_personne_edit', {'id': personne.id}) }}" class="btn btn-small rounded-1 blue dark-3 btn-press"><i class="fas fa-pen"></i></a>
+
+        {{ include('personne/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}

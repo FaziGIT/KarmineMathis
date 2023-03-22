@@ -1,0 +1,100 @@
+{{ form_start(form, {'attr':{'class':'form-material'}})}}
+
+
+<div class="gutter-xs7">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-field">
+                {{ form_label(form.prenom) }}
+                {{ form_widget(form.prenom, {'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>    
+        <div class="col-4">
+            <div class="form-field">
+                {{ form_label(form.pseudo) }}
+                {{ form_widget(form.pseudo, {'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-field">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom, {'attr':{'class':'form-control'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {{ form_label(form.sexe) }}
+            {{ form_widget(form.sexe) }}
+        </div>
+        <div class="col-6">
+            {{ form_label(form.role) }}
+            {{ form_widget(form.role) }}
+        </div>
+    </div>
+        {{ form_row(form.dateNaissance) }}
+    <div class="form-field">
+        {{ form_label(form.nationalite) }}
+        {{ form_widget(form.nationalite, {'attr':{'class':'form-control'}}) }}
+    </div>
+
+    <div class="form-field">
+        {{ form_label(form.image) }}
+        {{ form_widget(form.image, {'attr':{'class':'form-control'}}) }}
+    </div>
+
+    <div class="form-field">
+        {{ form_label(form.liquipedia) }}
+        {{ form_widget(form.liquipedia, {'attr':{'class':'form-control'}}) }}
+    </div>
+
+    {{ form_row(form.radioButton) }}
+    {{ form_row(form.coach) }}
+    {{ form_row(form.joueur) }}
+    <div class="mt-2">
+        <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
+    </div>
+</div>
+
+
+    
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    
+    $(document).ready(function() {
+        $('#radio-button-id').click(function() {
+            var coachField = $('#coach-id');
+            var joueurField = $('#joueur-id');
+            if ($('#personne_radioButton_1').is(':checked')) {
+            coachField.show();
+            joueurField.hide();
+            } else if ($('#personne_radioButton_2').is(':checked')) {
+            coachField.hide();
+            joueurField.show();
+            } else {
+            coachField.hide();
+            joueurField.hide();
+            }
+        });
+    });
+    </script>
+    {% if form.coach.vars.value != null %}
+        <script>
+            var coachField = $('#coach-id');
+            document.getElementById("personne_radioButton_1").checked = true;
+            coachField.show();
+        </script>
+    {% endif %}
+    {% if form.joueur.vars.value != null %}
+        <script>
+            var joueurField = $('#joueur-id');
+            document.getElementById("personne_radioButton_2").checked = true;
+            joueurField.show();
+            console.log("test")
+        </script>
+    {% endif %}
+
+{% endblock %}
+
+{{ form_end(form) }}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier la Competition{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>modifier la competition</h1>
+
+    <div>
+        {{ include('competition/_form.html.twig', {'button_label': ' Update'}) }}
+
+        <a class="btn btn-small rounded-1 grey dark-1 btn-press mt-1" href="{{ path('competition') }}"><i class="fas fa-arrow-left "></i> Retour</a>
+
+
+        {{ include('competition/_delete_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

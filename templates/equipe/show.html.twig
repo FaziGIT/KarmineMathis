@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Equipe{% endblock %}
+
+{% block body %}
+    <h1>Fiche de l'Équipe "{{equipe.nom}}"</h1>
+
+    <div class="card shadow-1 fx-row white bd-5 bd-r-solid bd-black rounded-4 grix xs1 md2 lg2">
+        <div class=" bd-t-5 bd-r-solid bd-black col-xs3 col-md2 col-lg3 row-sm3 row-md2 row-lg3" style="background-color: grey;width: 400px">
+            <div class="text-jeu-associe">
+                <h3>
+                    <span class="iconify" data-icon="material-symbols:arrow-circle-down-rounded"></span> 
+                    Jeu associé 
+                    <span class="iconify" data-icon="material-symbols:arrow-circle-down-rounded"></span>
+                </h3>
+            </div>    
+               <div class="divider"></div>
+            <img data-ax="lightbox" style="border-radius:5%;" id="example-lightbox" class="equipe-detail-img lightbox responsive-media mt-5 mx-auto" src="{{equipe.leJeu.image}}" alt="picsum" />
+            <div class="font-s3 text-grey text-light-2 text-jeu-associe underline mt-5 mx-auto"><a target="_blank" href="{{ path('app_jeu_show', {'id': equipe.leJeu.id}) }}">{{ equipe.leJeu.nom }}</a></div>
+        </div>
+        <div class="d-flex fx-col fx-grow pos-lg3">
+            <div class="card-header p-1 text-jeu-associe">
+                <h4>Joue pour la Karmine CORP</h4>
+            </div>
+            <div class="card-content mt-auto mx-auto">
+                
+                <span style="text-align:center;" class="col-3"><img class="responsive-media image-roster-fiche-equipe" src="{{ equipe.image }}" alt="Image du roster"></span>
+            </div>
+            <div class="card-footer justify-center">
+                {% if app.user and is_granted("ROLE_ADMIN") %}
+                    <a href="{{ path('app_equipe_edit', {'id': equipe.id}) }}" class=" btn btn-edit  shadow-1 primary rounded-4 btn-large primary mr-2">Modifier</a>
+                    {{ include('equipe/_delete_form.html.twig') }}
+                {% endif %}
+                <a href="{{ path('app_equipe_index') }}" class="btn btn-list shadow-1 primary rounded-4 btn-large primary ml-2">Revenir à la liste</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

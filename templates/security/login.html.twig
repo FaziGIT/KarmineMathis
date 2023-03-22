@@ -1,0 +1,55 @@
+{% extends 'baseConnect.html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block body %}
+<form class="form-material pb-3" method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <h5 class="text-center">
+            Vous êtes connecté en tant que : {{ app.user.userIdentifier }}, Appuyez <a class="ici" href="{{ path('app_logout') }}">ici</a> pour vous déconnecter
+        </h5>
+    {% else %}
+        <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+
+        <div class="grix xs1 md2 lg2 gutter-xs7">
+            <div class="form-field">
+                <label for="inputEmail">Email</label>
+                <input type="email" data-form-validate="auto" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+            </div>
+
+            <div class="form-field">
+                <label for="inputPassword">Mot de passe</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            </div>
+        </div>
+        
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+        #}
+        <div class="divider  my-5"></div>
+
+        <div class="float-right mb-5">
+            <button class="btn btn-register shadow-1 primary rounded-4 btn-large primary mr-2" type="submit">Se connecter</button>
+        </div>
+        <a class="btn btn-forget shadow-1 primary rounded-4  primary mr-2" href="{{path('app_forgot_password_request')}}">Mot de passe oublié</a>
+
+    {% endif %}
+
+    
+
+    
+</form>
+{% endblock %}

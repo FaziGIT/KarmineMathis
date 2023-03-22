@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block before %}
+  <h2 class="accueil">NEWS</h2>
+{% endblock %}
+{% block body %}
+    <style>
+        body{
+            background-image: url("{{asset('images/wallpaper/fond-vague.svg')}}");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+
+
+    <div class="caroulix" id="example-caroulix" data-ax="caroulix" data-ax-caroulix-autoplay-enabled="true" data-caroulix-indicators-enabled="true" style="border-radius:10px">
+  <div class="caroulix-arrow caroulix-prev">
+    <span class="iconify-inline font-s5" data-icon="mdi:chevron-left"></span>
+  </div>
+  <div class="caroulix-arrow caroulix-next">
+    <span class="iconify-inline font-s5" data-icon="mdi:chevron-right"></span>
+  </div>
+  <div class="caroulix-item">
+    <img src="/images/wallpaper/kcx2.0.jpg" alt="img1" />
+  </div>
+  <div class="caroulix-item">
+    <img src="/images/wallpaper/TheOne2.0.png" alt="img2" />
+  </div>
+  <div class="caroulix-item">
+    <img src="/images/wallpaper/b2b2.0.jpeg" alt="img3" />
+  </div>
+  <div class="caroulix-item">
+    <img src="/images/wallpaper/valo2.0.jpg" alt="img4" />
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if app.session == null %}
+        {% include "include/_modalDisclaimer.html.twig" %}
+    {% endif %}
+    
+    
+{% endblock %}
+
+
+
+
+
+

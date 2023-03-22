@@ -1,0 +1,27 @@
+<div class="modal shadow-1 white rounded-3" id="modal-disclaimer" style="max-height:27%;">
+  <div class="modal-header">
+    DISCLAIMER !
+  </div>
+  <div class="modal-content">
+    Ceci est un disclaimer
+  </div>
+  <div class="modal-footer">
+    <button data-target="modal-disclaimer" class="ml-auto btn shadow-1 rounded-1 btn-small primary">Close</button>
+  </div>
+</div>
+
+</div>
+
+
+
+<script>
+        let modal = new Axentix.Modal('#modal-disclaimer',{
+            overlay: false,
+            animationDuration: 500
+        });
+      
+
+
+        // Syntax : modal.{method}
+        modal.open();
+</script>

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Competition{% endblock %}
+
+{% block body %}
+    <h1 class="text text-center">Fiche de la competition</h1>
+    
+
+
+    <table class="table">
+            <tr>
+                <th>Nom</th>
+                <td>{{ competition.nom }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ competition.Statut }}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ competition.dateDebut ? competition.dateDebut|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>GainPossible</th>
+                <td>{{ competition.gainPossible }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ competition.dateFin ? competition.dateFin|date('d/m/Y') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-small rounded-1 grey dark-1 btn-press" href="{{ path('competition') }}"><i class="fas fa-arrow-left "></i></a>
+
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <a class="btn btn-small btn-primary"href="{{ path('competition_edit', {'id': competition.id}) }}"><i class="fas fa-pen "></i></a>
+        {{ include('competition/_delete_form.html.twig') }}
+    {% endif %}
+
+    
+{% endblock %}

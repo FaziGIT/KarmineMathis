@@ -1,0 +1,21 @@
+{% set route = app.request.attributes.get('_route') %}
+
+{{ form_start(form, {'attr':{'class':'form-material'}})}}
+
+<div class="form-field">
+    {{form_label(form.libelle)}}
+    {{form_widget(form.libelle, {'attr':{'class':'form-control'}})}}
+</div>
+
+    <div class="mt-3">
+        {% if route =="app_categorie_jeu_new" %}
+                <button class="btn btn-update shadow-1 primary rounded-4 btn-large primary mr-2">Ajouter</button>
+        {% elseif route =="app_categorie_jeu_edit"%}
+                <button href="{{ path('app_categorie_jeu_edit', {'id': categorie_jeu.id}) }}" class=" btn btn-edit  shadow-1 primary rounded-4 btn-large primary mr-2">Modifier</button>
+        {% endif %}
+        
+         <div style="float: right;">
+            <a href="{{ path('app_categorie_jeu_index') }}" class="btn btn-list shadow-1 primary rounded-4 btn-large primary mr-2">Revenir à la liste</a>
+        </div>
+    </div>
+{{ form_end(form) }}

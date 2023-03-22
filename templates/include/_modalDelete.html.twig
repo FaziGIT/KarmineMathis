@@ -1,0 +1,41 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<button type="button" class="btn error btn-delete shadow-1 primary rounded-4 btn-large primary" data-toggle="modal" data-target="#deleteModal">Supprimer</button>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        Êtes-vous sûr(e) de vouloir supprimer cet item
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <a href="{{ path('app_jeu_delete', {'id': jeu.id}) }}" class="btn btn-danger">Supprimer</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+$(document).ready(function() {
+  // Lorsque le bouton "Supprimer" est cliqué
+  $('.btn-delete').click(function() {
+    // Récupérer l'ID de la modal à afficher à partir de l'attribut "data-target" du bouton
+    var targetModal = $(this).data('target');
+    
+    // Afficher la modal correspondante
+    $(targetModal).modal('show');
+  });
+});
+</script>

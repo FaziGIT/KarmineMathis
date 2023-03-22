@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <h1>Modifier le profil de {{app.user.nom}} {{app.user.prenom}}</h1>
+        {{ include('user/_form.html.twig') }}
+
+        {% block javascripts %}
+        {% endblock %}
+        
+{% endblock %}
+
+{# {% block javascripts %}
+    {% include "include/_modalDelete.html.twig" %}
+{% endblock %} #}
