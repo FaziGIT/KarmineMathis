@@ -88,7 +88,11 @@ class PersonneController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-
+            if($form->get("radioButton")->getViewData() == 0)
+            {
+                $personne->setCoach(null);
+                $personne->setJoueur(null);
+            }
             $personneRepository->add($personne, true);
 
             $this->addFlash("success","La personne à bien été modifiée");
