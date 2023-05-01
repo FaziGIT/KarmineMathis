@@ -56,7 +56,6 @@ class RegistrationController extends AbstractController
                 $user->setAvatar($fichier);
             }
 
-
             // encode the plain password
             $user->setPassword(
             $userPasswordHasher->hashPassword(

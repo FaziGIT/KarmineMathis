@@ -9,6 +9,8 @@ class LoginPageTest extends WebTestCase
 {
     public function testSomething(): void
     {
+
+        // TEST ROUTES / URL 
         $client = static::createClient();
         
         $entityManager = $client->getContainer()->get('doctrine.orm.entity_manager');

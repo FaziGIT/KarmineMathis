@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PersonneTest extends KernelTestCase
 {
-
+// TEST UNE PERSONNE AVEC ASSERT SI PROBLEME
     public function getEntity() : Personne 
     {
         return (new Personne())->setPseudo('Fazi')
