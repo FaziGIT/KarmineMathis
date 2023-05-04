@@ -7,7 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PersonneTest extends KernelTestCase
 {
-// TEST UNE PERSONNE AVEC ASSERT SI PROBLEME
+
+// TEST UNE ENTITY PERSONNE AVEC ASSERT 
+
+    // Remplissage d'une personne via l'entity
     public function getEntity() : Personne 
     {
         return (new Personne())->setPseudo('Fazi')
@@ -15,6 +18,8 @@ class PersonneTest extends KernelTestCase
                                 ->setNom('TSRT')
                                 ->setDateNaissance(new \DateTimeImmutable());
     }
+
+    // Fonction qui test si le remplissage de l'entity est correct
     public function testEntityIsValid(): void
     {
         self::bootKernel();
@@ -25,9 +30,11 @@ class PersonneTest extends KernelTestCase
         
         $errors = $container->get('validator')->validate($personne);
 
+        // Permet de prévoir le nombre d'erreurn, 0 ici
         $this->assertCount(0, $errors);
     }
 
+    // Fonction qui test si le remplissage de l'entity est correct, ici pas correct car Pseudo vide
     public function testInvalidPseudo()
     {
         self::bootKernel();
@@ -35,10 +42,12 @@ class PersonneTest extends KernelTestCase
 
         $personne = new Personne();
         $personne = $this->getEntity();
+        // Changement du pseudo pour faire en sorte qu'il soit vide = erreur
         $personne->setPseudo('');
 
         $errors = $container->get('validator')->validate($personne);
 
+        // Permet de prévoir le nombre d'erreur, 1 ici
         $this->assertCount(1, $errors);
     }
 }

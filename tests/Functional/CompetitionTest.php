@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CompetitionTest extends WebTestCase
 {
-    public function testSomething(): void
+    public function testIfFormCompetitionIsSuccessful(): void
     {
         $client = static::createClient();
         
@@ -25,27 +25,30 @@ class CompetitionTest extends WebTestCase
         $submitButton = $crawler->selectButton('Sauvegarder');
         $form = $submitButton->form();
 
-        $form["competition[nom]"] = "testCompetition";
-        $form["competition[Statut]"] = "Bientot";
-        $form["competition[dateDebut][day]"] = "17";
-        $form["competition[dateDebut][month]"] = "1";
-        $form["competition[dateDebut][year]"] = "2018";
-        $form["competition[gainPossible]"] = "1000";
-        $form["competition[equipe]"] = "Les Rois";
-
         // Soumettre le formulaire
-
-        $client->submit($form);
+        $client->submit($form, [
+            'competition[nom]'    => 'testCompetition',
+            'competition[Statut]' => 'Bientot',
+            'competition[dateDebut][day]' => '17',
+            'competition[dateDebut][month]' => '1',
+            'competition[dateDebut][year]' => '2020',
+            'competition[dateFin][day]' => '17',
+            'competition[dateFin][month]' => '1',
+            'competition[dateFin][year]' => '2021',
+            'competition[gainPossible]' => '1000',
+            'competition[equipe]' => 17,
+        ]);
 
         // Vérifier le statut HTTP
-
-        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $this->assertResponseStatusCodeSame(303);
         
-        // Vérifier l'envoie du mail (non)
-
+        // Redirection vers la page prévu (ici Competition)
         $client->followRedirect();
 
         // Vérifier la présence du message de succès
-
+        $this->assertSelectorTextContains(
+            'div.alert.alert-success',
+            'La compétition à bien été ajoutée'
+        );
     }
 }
