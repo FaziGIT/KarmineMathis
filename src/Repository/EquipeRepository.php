@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Equipe;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Equipe>
@@ -38,6 +39,12 @@ class EquipeRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
+    public function listeEquipeSimple():QueryBuilder{
+        return $this->createQueryBuilder('eq')
+                    ->orderBy('eq.nom', 'ASC');
+   }
 
 //    /**
 //     * @return Equipe[] Returns an array of Equipe objects

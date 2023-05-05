@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Personne;
 use App\Form\FiltrePersonneType;
 use App\Form\PersonneType;
+use App\Model\FiltrePersonne;
 use App\Repository\PersonneRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,15 +25,11 @@ class PersonneController extends AbstractController
      */
     public function index(PersonneRepository $personneRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $nom=null;
-        $formFiltrePersonne = $this->createForm(FiltrePersonneType::class);
+        $filtre=new FiltrePersonne();
+        $formFiltrePersonne = $this->createForm(FiltrePersonneType::class, $filtre);
         $formFiltrePersonne->handleRequest($request);
-        if($formFiltrePersonne->isSubmitted() && $formFiltrePersonne->isValid()){
-            // on récupère la saisie dans le formulaire
-            $nom=$formFiltrePersonne->get('nom')->getData();
-        }
         $personnes = $paginator->paginate(
-            $personneRepository->listePersonnesCompletePaginee($nom), /* query NOT result */
+            $personneRepository->listePersonnesCompletePaginee($filtre), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             3 /*limit per page*/
         );

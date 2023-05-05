@@ -33,7 +33,8 @@
             </div>
             <div class="navbar-menu ml-auto pb-3">
                 <a class="navbar-link" href="{{path('competition')}}">Compétitions</a>
-                <div class="dropdown" id="personneDD">
+                <a class="navbar-link" href="{{path('app_personne_index')}}">Personnes</a>
+                {# <div class="dropdown" id="personneDD">
                     <div class="navbar-link" data-target="personneDD">
                         Personnes &#155;
                     </div>
@@ -44,7 +45,7 @@
                         <a class="dropdown-item" href="{{ path('filtreRole', {'role': "ceo"}) }}">CEO</a>
                         <a class="dropdown-item" href="{{ path('filtreRole', {'role': "coach"}) }}">Coachs</a>
                     </div>
-                </div>
+                </div> #}
                 <div class="dropdown" id="equipeDD">
                     <div class="navbar-link" data-target="equipeDD">
                         Équipes & jeux &#155;

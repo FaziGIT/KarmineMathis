@@ -6,12 +6,18 @@
     <h1>Liste des personnes</h1>
     {% if app.user and is_granted('ROLE_ADMIN') %}
     <div>
+    <div class="d-flex">
+        <a href="{{ path('app_personne_new') }}" class="btn btn-small rounded-1 blue dark-3 btn-press ml-auto p-2">Ajouter une personne</a>
+    </div>
         <div class="d-flex">
             {{ form_start(formFiltrePersonne)}}
-                {{ form_row(formFiltrePersonne.nom)}}
+            <div class="row">
+                <div class="col">{{ form_row(formFiltrePersonne.nom)}}</div>
+                <div class="col">{{ form_row(formFiltrePersonne.coach)}}</div>
+                <div class="col">{{ form_row(formFiltrePersonne.joueur)}}</div>
+            </div>  
                 <button type="submit" class="btn btn-warning">Rechercher</button>
             {{ form_end(formFiltrePersonne)}}
-            <a href="{{ path('app_personne_new') }}" class="btn btn-small rounded-1 blue dark-3 btn-press ml-auto p-2">Ajouter une personne</a>
         </div>
     </div>
     {% endif %}

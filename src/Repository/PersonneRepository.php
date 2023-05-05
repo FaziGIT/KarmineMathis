@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Personne;
+use App\Model\FiltrePersonne;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -43,12 +44,20 @@ class PersonneRepository extends ServiceEntityRepository
    /**
     * @return Query Returns an array of Personne objects
     */
-   public function listePersonnesCompletePaginee($nom=null): ?Query
+   public function listePersonnesCompletePaginee(FiltrePersonne $filtre=null): ?Query
    {
        $query =  $this->createQueryBuilder('p');
-           if($nom != null){
+           if(!empty($filtre->nom)){
             $query->andWhere('p.nom like :nomcherche')
-            ->setParameter('nomcherche',"%{$nom}%");
+            ->setParameter('nomcherche',"%{$filtre->nom}%");
+           }
+           if(!empty($filtre->coach)){
+            $query->andWhere('p.coach = :coachcherche')
+            ->setParameter('coachcherche',$filtre->coach);
+           }
+           if(!empty($filtre->joueur)){
+            $query->andWhere('p.joueur = :joueurcherche')
+            ->setParameter('joueurcherche',$filtre->joueur);
            }
            $query->orderBy('p.prenom')
        ;
