@@ -44,6 +44,17 @@ class FiltrePersonneType extends AbstractType
                 'label'=>'Recherche sur le joueur de l\'équipe',
                 'required'=>false,
             ])
+            ->add('lesEquipes', EntityType::class, [
+                'class'=>Equipe::class,
+                'query_builder'=>function(EquipeRepository $repo){
+                        return $repo->listeEquipeSimple();
+                },
+                'choice_label'=>'nom',
+                'by_reference' => false,
+                'multiple'=>true,
+                'label'=>'Recherche sur le joueur de l\'équipe',
+                'required'=>false,
+            ])
         ;
     }
 

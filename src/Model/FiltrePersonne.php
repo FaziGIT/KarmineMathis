@@ -19,6 +19,8 @@ class FiltrePersonne
     public Equipe $coach;
     
     public Equipe $joueur;
+
+    public $lesEquipes;
 }
 
 ?>

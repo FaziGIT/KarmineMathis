@@ -59,6 +59,30 @@ class PersonneRepository extends ServiceEntityRepository
             $query->andWhere('p.joueur = :joueurcherche')
             ->setParameter('joueurcherche',$filtre->joueur);
            }
+           // Permet de filtrer sans additionner les catégories (Tout les jeux Football et tout les jeux FPS)
+           if(!empty($filtre->lesEquipes) && ($filtre->lesEquipes->count()>0)) {
+               $query->join('p.coach', 'c')
+                   ->andWhere('c.id IN (:lesEquipes)')
+                   ->setParameter('lesEquipes', $filtre->lesEquipes);
+                   // dd($filtre->lesEquipes);
+           }
+        //    // Les coachs s'additionne pour le filtrage (A la fois equipe 1 et 2)
+        //     if (!empty($filtre->lesEquipes)) {
+        //         foreach ($filtre->lesEquipes as $key => $value) {
+        //             $query->join('p.coach', 'c'.$key)
+        //                 ->andWhere('c'.$key.'.id = :equipe'.$key)
+        //                 ->setParameter('equipe'.$key, $value);
+        //         }
+        //     }
+            // if(!empty($filtre->lesEquipes) && $filtre->lesEquipes->count()>0){
+            //     $conditions=[];
+            //     foreach ($filtre->styles as $key => $style) {
+            //         $conditions[]= $query->expr()->isMemberOf(":styleRecherche$key","a.styles");
+            //         $query->setParameter("styleRecherche$key", $style);      
+            //     }
+            //     $blocConditionsOr=$query->expr()->orX()->addMultiple($conditions);
+            //     $query->andWhere($blocConditionsOr);
+            // }
            $query->orderBy('p.prenom')
        ;
        return $query->getQuery();
