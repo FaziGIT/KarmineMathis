@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CompetitionTest extends WebTestCase
 {
+    // TEST DU FORMULAIRE
     public function testIfFormCompetitionIsSuccessful(): void
     {
         $client = static::createClient();
