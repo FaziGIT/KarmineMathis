@@ -38,6 +38,7 @@ class CompetitionTest extends WebTestCase
             'competition[dateFin][year]' => '2021',
             'competition[gainPossible]' => '1000',
             'competition[equipe]' => 17,
+            'competition[lieu]' => 1,
         ]);
 
         // Vérifier le statut HTTP

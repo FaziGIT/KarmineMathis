@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Competition;
+use App\Model\FiltreCompetition;
+use Doctrine\ORM\Query;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -38,6 +40,22 @@ class CompetitionRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
+    /**
+    * @return Query Returns an array of Personne objects
+    */
+   public function listeCompetitionsCompletePaginee(FiltreCompetition $filtre=null): ?Query
+   {
+       $query =  $this->createQueryBuilder('c');
+           if(!empty($filtre->lieu)){
+            $query->andWhere('c.lieu = :lieucherche')
+            ->setParameter('lieucherche',$filtre->lieu);
+           }
+           $query->orderBy('c.lieu')
+       ;
+       return $query->getQuery();
+   }
 
 //    /**
 //     * @return Competition[] Returns an array of Competition objects

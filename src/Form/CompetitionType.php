@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Equipe;
 use App\Entity\Competition;
+use App\Entity\Lieu;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -56,6 +57,12 @@ class CompetitionType extends AbstractType
             ])
             ->add('equipe', EntityType::class, [
                 'class'=>Equipe::class,
+                'placeholder'=>'',
+                'label'=>false,
+                'multiple'=>false,
+            ])
+            ->add('lieu', EntityType::class, [
+                'class'=>Lieu::class,
                 'placeholder'=>'',
                 'label'=>false,
                 'multiple'=>false,

@@ -52,8 +52,11 @@ class FiltrePersonneType extends AbstractType
                 'choice_label'=>'nom',
                 'by_reference' => false,
                 'multiple'=>true,
-                'label'=>'Recherche sur le joueur de l\'équipe',
+                'label'=>'Choisir un coach',
                 'required'=>false,
+                'attr'=> [
+                    'data-placeholder'=>'Recherche un/des coachs'
+                ]
             ])
         ;
     }

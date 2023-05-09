@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Competition;
 use App\Form\CompetitionType;
+use App\Model\FiltreCompetition;
+use App\Form\FiltreCompetitionType;
 use App\Repository\CompetitionRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,14 +24,18 @@ class CompetitionController extends AbstractController
     public function index(CompetitionRepository $competitionRepository, PaginatorInterface $paginator, Request $request): Response
     {
 
+        $filtre=new FiltreCompetition();
+        $formFiltreCompetition = $this->createForm(FiltreCompetitionType::class, $filtre);
+        $formFiltreCompetition->handleRequest($request);
         $competitions = $paginator->paginate(
-            $competitionRepository->findAll(), /* query NOT result */
+            $competitionRepository->listeCompetitionsCompletePaginee($filtre), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             3 /*limit per page*/
         );
 
         return $this->render('competition/index.html.twig', [
             'competitions' => $competitions,
+            'formFiltreCompetition' => $formFiltreCompetition->createView()
         ]);
     }
 
