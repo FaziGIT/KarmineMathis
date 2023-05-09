@@ -135,6 +135,7 @@ class Lieu
     {
         return $this->salle . " - " . $this->ville . ", " . $this->pays;
     }
+    
     public function __toString()
     {
         return $this->salle . " - " . $this->ville . ", " . $this->pays;

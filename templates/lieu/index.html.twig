@@ -4,11 +4,13 @@
 
 {% block body %}
     <h1>Lieu index</h1>
+    <div class="d-flex">
+        <a href="{{ path('app_lieu_indexCount') }}" class="btn btn-small rounded-1 blue dark-3 btn-press ml-auto p-2">Statistiques</a>
+    </div>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Salle</th>
                 <th>Ville</th>
                 <th>Pays</th>
@@ -18,13 +20,13 @@
         <tbody>
         {% for lieu in lieus %}
             <tr>
-                <td>{{ lieu.id }}</td>
                 <td>{{ lieu.salle }}</td>
                 <td>{{ lieu.ville }}</td>
                 <td>{{ lieu.pays }}</td>
                 <td>
-                    <a href="{{ path('app_lieu_show', {'id': lieu.id}) }}">show</a>
-                    <a href="{{ path('app_lieu_edit', {'id': lieu.id}) }}">edit</a>
+                    <a href="{{ path('app_lieu_show', {'id': lieu.id}) }}" class="btn btn-small rounded-1 blue dark-3 btn-press"><i class="fas fa-eye"></i></a>
+                    <a class="btn btn-small rounded-1 airforce dark-3 btn-press" href="{{ path('app_lieu_edit', {'id': lieu.id}) }}"><i class="fas fa-pen"></i></a>
+                    {{ include('lieu/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
@@ -35,5 +37,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_lieu_new') }}">Create new</a>
+    <div>
+        <a href="{{ path('app_lieu_new') }}" class="btn btn-small rounded-1 blue dark-3 btn-press ml-auto p-2">Ajouter un lieu</a>
+    </div>
 {% endblock %}

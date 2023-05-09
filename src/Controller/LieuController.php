@@ -26,6 +26,18 @@ class LieuController extends AbstractController
     }
 
     /**
+     * @Route("/count", name="app_lieu_indexCount", methods={"GET"})
+     */
+    public function indexCount(LieuRepository $lieuRepository): Response
+    {
+        $countLieuCompetition = $lieuRepository->countLieuCompetition();
+        // dd($countLieuCompetition);
+        return $this->render('lieu/indexCount.html.twig', [
+            'countLieuCompetition'=>$countLieuCompetition
+        ]);
+    }
+
+    /**
      * @Route("/new", name="app_lieu_new", methods={"GET", "POST"})
      */
     public function new(Request $request, LieuRepository $lieuRepository): Response

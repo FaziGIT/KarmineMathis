@@ -44,6 +44,23 @@ class LieuRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('li')
                     ->orderBy('li.lieu', 'ASC');
    }
+
+
+   /**
+    * @return Lieu[] Returns an array of Lieu objects
+    */
+   public function countLieuCompetition(): array
+   {
+       return $this->createQueryBuilder('l')
+           ->select("l.ville,l.pays,l.salle,count(c.id)")
+           ->innerjoin("l.competitions", "c")
+           ->groupBy("l.ville,l.pays,l.salle")
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+
 //    /**
 //     * @return Lieu[] Returns an array of Lieu objects
 //     */

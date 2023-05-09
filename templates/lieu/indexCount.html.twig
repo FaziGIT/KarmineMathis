@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lieu compet{% endblock %}
+
+{% block body %}
+    <h1>Lieu compet</h1>
+    
+
+    <p>Nombre de competition à :</p>
+    {% for lieuCompet in countLieuCompetition %}
+    <ul>
+        <li>{{ lieuCompet.salle }} - {{ lieuCompet.ville }}, {{ lieuCompet.pays }} : <U>{{ lieuCompet.1 }}</U> </li>
+    </ul>
+    {% else %}
+        <tr>
+            <td colspan="5">no records found</td>
+        </tr>
+    {% endfor %}
+
+{% endblock %}

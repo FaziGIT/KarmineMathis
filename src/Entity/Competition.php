@@ -54,11 +54,13 @@ class Competition
 
     /**
      * @ORM\ManyToOne(targetEntity=Equipe::class, inversedBy="competition")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $equipe;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="competitions")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $lieu;
 
