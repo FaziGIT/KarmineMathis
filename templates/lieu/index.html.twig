@@ -10,12 +10,12 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Salle</th>
-                <th>Ville</th>
-                <th>Pays</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Salle</th>
+            <th>Ville</th>
+            <th>Pays</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for lieu in lieus %}
@@ -24,9 +24,13 @@
                 <td>{{ lieu.ville }}</td>
                 <td>{{ lieu.pays }}</td>
                 <td>
-                    <a href="{{ path('app_lieu_show', {'id': lieu.id}) }}" class="btn btn-small rounded-1 blue dark-3 btn-press"><i class="fas fa-eye"></i></a>
-                    <a class="btn btn-small rounded-1 airforce dark-3 btn-press" href="{{ path('app_lieu_edit', {'id': lieu.id}) }}"><i class="fas fa-pen"></i></a>
-                    {{ include('lieu/_delete_form.html.twig') }}
+                    <a href="{{ path('app_lieu_show', {'id': lieu.id}) }}"
+                       class="btn btn-small rounded-1 blue dark-3 btn-press"><i class="fas fa-eye"></i></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-small rounded-1 airforce dark-3 btn-press"
+                           href="{{ path('app_lieu_edit', {'id': lieu.id}) }}"><i class="fas fa-pen"></i></a>
+                        {{ include('lieu/_delete_form.html.twig') }}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -39,8 +43,8 @@
 
     {% if is_granted('ROLE_ADMIN') %}
         <div>
-            <a href="{{ path('app_lieu_new') }}" class="btn btn-small rounded-1 blue dark-3 btn-press ml-auto p-2">Ajouter un lieu</a>
+            <a href="{{ path('app_lieu_new') }}" class="btn btn-small rounded-1 blue dark-3 btn-press ml-auto p-2">Ajouter
+                un lieu</a>
         </div>
     {% endif %}
-
 {% endblock %}
