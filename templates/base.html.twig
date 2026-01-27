@@ -20,9 +20,9 @@
         {% block stylesheets %}
         {% endblock %}
 
-        
+
     </head>
-    
+
     <body>
         <nav class="navbar shadow-1 primary pb-2" aria-label = "example navbar">
             <a href="{{path('accueil')}}" class="navbar-logo  navbar-centered">
@@ -62,11 +62,17 @@
                 <a class="navbar-link" href="{{path('sponsor')}}">Sponsors</a>
                 {# A mettre si noé et jerem publient leurs sites <a class="navbar-link" href="http://172.16.15.75:8000" target="_blank">Boutique</a> #}
                 <a class="navbar-link" href="https://karmineshop.com/" target="_blank">Boutique</a>
-                <a class="navbar-link connect" data-target="sidebar" class="btn rounded-1 btn-press primary">
+                {% if app.user %}
+                    <a class="navbar-link connect" data-target="sidebar" class="btn rounded-1 btn-press primary">
                         {# <img class="super-mini-pp responsive-media" src="{{ app.user.avatar }}" alt="Photo de profil"> #}
                         <img class="super-mini-pp responsive-media" src="{{asset("images/avatar/" ~ app.user.avatar )}}" alt="Photo de profil">
                         Profil
-                </a>
+                    </a>
+                {% else %}
+                    <a class="navbar-link connect" data-target="sidebar">
+                        Connexion
+                    </a>
+                {% endif %}
             </div>
 
             {# <button class="btn transparent text-white hide-md-up font-s5 ml-auto" aria-label="Menu button">
@@ -92,12 +98,12 @@
             {% endfor %}
 
         {# Le body #}
-            {% block body %}                 
+            {% block body %}
             {% endblock %}
-        </div> 
+        </div>
     </body>
 {{ include('include/_sidenav.html.twig') }}
-    
+
 
     <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/axentix@2.2.1/dist/axentix.min.js"></script>
@@ -118,7 +124,7 @@
             // });
 
         </script>
-        
+
         {% block javascripts %}
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
