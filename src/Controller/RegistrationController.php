@@ -13,24 +13,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
-    private EmailVerifier $emailVerifier;
-
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(private readonly EmailVerifier $emailVerifier, private readonly UserPasswordHasherInterface $userPasswordHasher, private readonly UserAuthenticatorInterface $userAuthenticator, private readonly Authenticator $authenticator, private readonly TranslatorInterface $translator)
     {
-        $this->emailVerifier = $emailVerifier;
     }
 
-    /**
-     * @Route("/register", name="app_register")
-     */
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, Authenticator $authenticator, EntityManagerInterface $entityManager): Response
+    #[Route(path: '/register', name: 'app_register')]
+    public function register(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -39,26 +34,26 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             //on récupère l'avatar sélectionné
-            $fichierImage=$form->get('avatarFile')->getData();
-            if ($fichierImage !=null) {
-                
+            $fichierImage = $form->get('avatarFile')->getData();
+            if ($fichierImage != null) {
+
                 // On supprimer l'ancien avatar
-                if($user->getAvatar()!="userVierge.png"){
-                    \unlink($this->getParameter('imagesAvatarDestination').$user->getAvatar());
+                if ($user->getAvatar() != "userVierge.png") {
+                    \unlink($this->getParameter('imagesAvatarDestination') . $user->getAvatar());
                 }
 
                 // On crée le nom du nouveau fichier avatar
-                $fichier=md5(\uniqid()).".".$fichierImage->guessExtension();
+                $fichier = md5(\uniqid()) . "." . $fichierImage->guessExtension();
 
                 // on déplace le fichier chargé dans le dossier public
-                $fichierImage->move($this->getParameter('imagesAvatarDestination'),$fichier);
+                $fichierImage->move($this->getParameter('imagesAvatarDestination'), $fichier);
 
                 $user->setAvatar($fichier);
             }
 
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $this->userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -77,24 +72,22 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            $this->addFlash("success","Connexion réussi");
+            $this->addFlash("success", "Connexion réussi");
 
-            return $userAuthenticator->authenticateUser(
+            return $this->userAuthenticator->authenticateUser(
                 $user,
-                $authenticator,
+                $this->authenticator,
                 $request
             );
         }
 
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registrationForm' => $form,
         ]);
     }
 
-    /**
-     * @Route("/verify/email", name="app_verify_email")
-     */
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
+    #[Route(path: '/verify/email', name: 'app_verify_email')]
+    public function verifyUserEmail(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -102,7 +95,7 @@ class RegistrationController extends AbstractController
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
+            $this->addFlash('verify_email_error', $this->translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
             return $this->redirectToRoute('app_register');
         }

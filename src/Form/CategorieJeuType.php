@@ -3,10 +3,8 @@
 namespace App\Form;
 
 use App\Entity\CategorieJeu;
-use App\Entity\Jeu;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategorieJeuType extends AbstractType

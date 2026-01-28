@@ -9,48 +9,46 @@ use App\Repository\JeuRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/jeu")
- */
+#[Route(path: '/jeu')]
 class JeuController extends AbstractController
 {
 
-    /**
-     * @Route("/new", name="app_jeu_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, JeuRepository $jeuRepository): Response
+    public function __construct(private readonly JeuRepository $jeuRepository, private readonly PaginatorInterface $paginator)
+    {
+    }
+
+    #[Route(path: '/new', name: 'app_jeu_new', methods: ['GET', 'POST'])]
+    public function new(Request $request): Response
     {
         $jeu = new Jeu();
         $form = $this->createForm(JeuType::class, $jeu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $jeuRepository->add($jeu, true);
+            $this->jeuRepository->add($jeu, true);
 
-            $this->addFlash("success","Le jeu à bien été ajouté");
+            $this->addFlash("success", "Le jeu à bien été ajouté");
 
             return $this->redirectToRoute('app_jeu_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('jeu/new.html.twig', [
+        return $this->render('jeu/new.html.twig', [
             'jeu' => $jeu,
             'form' => $form,
         ]);
     }
-    
 
-    /**
-     * @Route("/", name="app_jeu_index", methods={"GET"})
-     */
-    public function index(JeuRepository $jeuRepository, PaginatorInterface $paginator, Request $request): Response
+
+    #[Route(path: '/', name: 'app_jeu_index', methods: ['GET'])]
+    public function index(Request $request): Response
     {
-        $nom=null;
+        $nom = null;
         $formFiltreJeu = $this->createForm(FiltreJeuType::class);
         $formFiltreJeu->handleRequest($request);
-        if($formFiltreJeu->isSubmitted() && $formFiltreJeu->isValid()){
+        if ($formFiltreJeu->isSubmitted() && $formFiltreJeu->isValid()) {
             // On récupère la saisie dans le formulaire du nom
             $nom = $formFiltreJeu->get('nom')->getData();
         }
@@ -58,60 +56,53 @@ class JeuController extends AbstractController
         // dd($nom);
 
 
-        $jeux = $paginator->paginate(
-            $jeuRepository->listeJeuxPaginees($nom), /* query NOT result */
+        $jeux = $this->paginator->paginate(
+            $this->jeuRepository->listeJeuxPaginees($nom), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             2 /*limit per page*/
         );
 
         return $this->render('jeu/index.html.twig', [
             'jeux' => $jeux,
-            'formFiltreJeu' => $formFiltreJeu->createView()
+            'formFiltreJeu' => $formFiltreJeu
         ]);
     }
 
-    
 
-    /**
-     * @Route("/{id}/edit", name="app_jeu_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, Jeu $jeu, JeuRepository $jeuRepository): Response
+    #[Route(path: '/{id}/edit', name: 'app_jeu_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Jeu $jeu): Response
     {
         $form = $this->createForm(JeuType::class, $jeu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $jeuRepository->add($jeu, true);
+            $this->jeuRepository->add($jeu, true);
 
-            $this->addFlash("success","Le jeu à bien été modifié");
+            $this->addFlash("success", "Le jeu à bien été modifié");
 
             return $this->redirectToRoute('app_jeu_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('jeu/edit.html.twig', [
+        return $this->render('jeu/edit.html.twig', [
             'jeu' => $jeu,
             'form' => $form,
         ]);
     }
 
-    /**
-     * @Route("/delete/{id}", name="app_jeu_delete", methods={"GET","POST"})
-     */
-    public function delete(Request $request, Jeu $jeu, JeuRepository $jeuRepository): Response
+    #[Route(path: '/delete/{id}', name: 'app_jeu_delete', methods: ['GET', 'POST'])]
+    public function delete(Request $request, Jeu $jeu): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$jeu->getId(), $request->request->get('_token'))) {
-            $jeuRepository->remove($jeu, true);
-            
-            $this->addFlash("success","Le jeu à bien été supprimé");
+        if ($this->isCsrfTokenValid('delete' . $jeu->getId(), $request->request->get('_token'))) {
+            $this->jeuRepository->remove($jeu, true);
+
+            $this->addFlash("success", "Le jeu à bien été supprimé");
         }
 
 
         return $this->redirectToRoute('app_jeu_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    /**
-     * @Route("/{id}", name="app_jeu_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'app_jeu_show', methods: ['GET'])]
     public function show(Jeu $jeu): Response
     {
         return $this->render('jeu/show.html.twig', [

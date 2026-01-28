@@ -11,64 +11,76 @@
 
     {{ form_start(registrationForm, {'attr':{'class':'form-material'}}) }}
 
-        <div class="grix xs1 md3 lg6 gutter-xs7 pb-5">
+    <div class="grix xs1 md3 lg6 gutter-xs7 pb-5">
 
-            <div class="form-field">
-                {{form_label(registrationForm.nom)}}
-                
-                {{ form_widget(registrationForm.nom, {'attr':{'class':'form-control'}}) }}
+        <div class="form-field">
+            {{ form_label(registrationForm.nom) }}
+
+            {{ form_widget(registrationForm.nom, {'attr':{'class':'form-control'}}) }}
+            <div class="text-red">{{ form_errors(registrationForm.nom) }}</div>
+        </div>
+
+        <div class="form-field">
+            {{ form_label(registrationForm.prenom) }}
+
+            {{ form_widget(registrationForm.prenom, {'attr':{'class':'form-control'}}) }}
+            <div class="text-red">{{ form_errors(registrationForm.prenom) }}</div>
+        </div>
+
+        <div class="form-field">
+            {{ form_row(registrationForm.sexe) }}
+        </div>
+
+        <div
+            class="form-field col-xs3 col-lg3 col-md2 row-lg4 row-sm3 row-md2 bd-black bd-solid bd-3 p-5 rounded-2 avatar-form">
+            <div>
+                <img class="responsive-media mb-2 bd-black bd-solid bd-3 image-avatar-form"
+                     src="/images/avatar/{{ registrationForm.avatar.vars.value }}" alt="Photo de profil"
+                     id="avatarAffichee">
             </div>
-
-            <div class="form-field">
-                {{form_label(registrationForm.prenom)}}
-                
-                {{ form_widget(registrationForm.prenom, {'attr':{'class':'form-control'}}) }}
-            </div>
-
-            <div class="form-field">
-                {{form_row(registrationForm.sexe)}}
-            </div>
-
-            <div class="form-field col-xs3 col-lg3 col-md2 row-lg4 row-sm3 row-md2 bd-black bd-solid bd-3 p-5 rounded-2 avatar-form">
-                <div>
-                    <img class="responsive-media mb-2 bd-black bd-solid bd-3 image-avatar-form" src="/images/avatar/{{registrationForm.avatar.vars.value}}" alt="Photo de profil" id="avatarAffichee">
-                </div>
-                <div>
-                    {{form_row(registrationForm.avatarFile)}}
-                    {{form_errors(registrationForm.avatarFile)}}
-                    <a id="uploadAvatar" class="btn btn-upload-image shadow-1 primary rounded-4 btn-large primary mr-2 px-5">
+            <div>
+                {{ form_row(registrationForm.avatarFile) }}
+                <div class="text-red">{{ form_errors(registrationForm.avatarFile) }}</div>
+                <a id="uploadAvatar"
+                   class="btn btn-upload-image shadow-1 primary rounded-4 btn-large primary mr-2 px-5">
                         <span class="iconify-inline font-s7 mr-2" data-icon="material-symbols:cloud-upload">
                         </span> Déposer une image
-                        <span class="iconify-inline font-s7 ml-2" data-icon="material-symbols:cloud-upload">
-                    </a>
-                </div>
-                
+                    <span class="iconify-inline font-s7 ml-2" data-icon="material-symbols:cloud-upload">
+                </a>
             </div>
 
-            <div class="form-field col-lg3">
-                {{form_label(registrationForm.email)}}
-                {{ form_widget(registrationForm.email, {'attr':{'class':'form-control'}}) }}
-            </div>
+        </div>
 
-            <div class="form-field col-lg3 pos-lg1">
-                {{form_label(registrationForm.plainPassword,'Mot de passe')}}
-                
-                {{ form_widget(registrationForm.plainPassword, {'attr':{'class':'form-control'}}) }}
-            </div>
-        
-            <div class="col-lg2 pos-lg1">
-                {{form_label(registrationForm.agreeTerms, 'Accepter les conditions générales') }}
-                {{ form_widget(registrationForm.agreeTerms) }}
-            </div>
+        <div class="form-field col-lg3">
+            {{ form_label(registrationForm.email) }}
+            {{ form_widget(registrationForm.email, {'attr':{'class':'form-control'}}) }}
+            <div class="text-red">{{ form_errors(registrationForm.email) }}</div>
         </div>
-        <div class="divider mb-3"></div>
-        <div>      
-            <button type="submit" class="btn btn-register shadow-1 primary rounded-4 btn-large primary mr-2 px-5">S'inscrire</button>
+
+
+        <div class="form-field col-lg3 pos-lg1">
+            {{ form_label(registrationForm.plainPassword,'Mot de passe') }}
+
+            {{ form_widget(registrationForm.plainPassword, {'attr':{'class':'form-control'}}) }}
+            <div class="text-red">{{ form_errors(registrationForm.plainPassword) }}</div>
         </div>
+
+        <div class="col-lg2 pos-lg1">
+            {{ form_label(registrationForm.agreeTerms, 'Accepter les conditions générales') }}
+            {{ form_widget(registrationForm.agreeTerms) }}
+            <div class="text-red">{{ form_errors(registrationForm.agreeTerms) }}</div>
+        </div>
+    </div>
+    <div class="divider mb-3"></div>
+    <div>
+        <button type="submit" class="btn btn-register shadow-1 primary rounded-4 btn-large primary mr-2 px-5">
+            S'inscrire
+        </button>
+    </div>
 
     {{ form_end(registrationForm) }}
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{asset("js/gestionUpload.js")}}" defer></script>
+    <script src="{{ asset("js/gestionUpload.js") }}" defer></script>
 {% endblock %}

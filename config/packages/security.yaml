@@ -21,7 +21,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                target: app_login
+                target: accueil
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -35,16 +35,16 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: /login, roles: IS_ANONYMOUS }
         # - { path: ^/user, roles: ROLE_USER }
-#        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/, role: ROLE_USER }
+        #        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        #        - { path: ^/, role: ROLE_USER }
         - { path: /new, roles: ROLE_ADMIN }
         - { path: /edit, roles: ROLE_ADMIN }
         - { path: /user/modifier, roles: ROLE_USER }
         - { path: /delete, roles: ROLE_ADMIN }
 
     role_hierarchy:
-        ROLE_SUPERVISEUR : ROLE_USER
+        ROLE_SUPERVISEUR: ROLE_USER
         ROLE_ADMIN: ROLE_SUPERVISEUR
 
 when@test:

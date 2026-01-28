@@ -10,63 +10,59 @@ use App\Repository\PersonneRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-/**
- * @Route("/personne")
- */
+#[Route(path: '/personne')]
 class PersonneController extends AbstractController
 {
-    
-    
-    /**
-     * @Route("/", name="app_personne_index", methods={"GET"})
-     */
-    public function index(PersonneRepository $personneRepository, PaginatorInterface $paginator, Request $request): Response
+
+
+    public function __construct(private readonly PersonneRepository $personneRepository, private readonly PaginatorInterface $paginator)
     {
-        $filtre=new FiltrePersonne();
+    }
+
+    #[Route(path: '/', name: 'app_personne_index', methods: ['GET'])]
+    public function index(Request $request): Response
+    {
+        $filtre = new FiltrePersonne();
         $formFiltrePersonne = $this->createForm(FiltrePersonneType::class, $filtre);
         $formFiltrePersonne->handleRequest($request);
-        $personnes = $paginator->paginate(
-            $personneRepository->listePersonnesCompletePaginee($filtre), /* query NOT result */
+        $personnes = $this->paginator->paginate(
+            $this->personneRepository->listePersonnesCompletePaginee($filtre), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
             3 /*limit per page*/
         );
 
         return $this->render('personne/index.html.twig', [
             'personnes' => $personnes,
-            'formFiltrePersonne' => $formFiltrePersonne->createView()
+            'formFiltrePersonne' => $formFiltrePersonne
         ]);
     }
 
 
-    /**
-     * @Route("/new", name="app_personne_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, PersonneRepository $personneRepository): Response
+    #[Route(path: '/new', name: 'app_personne_new', methods: ['GET', 'POST'])]
+    public function new(Request $request): Response
     {
         $personne = new Personne();
         $form = $this->createForm(PersonneType::class, $personne);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $personneRepository->add($personne, true);
+            $this->personneRepository->add($personne, true);
 
-            $this->addFlash("success","La personne à bien été ajoutée");
+            $this->addFlash("success", "La personne à bien été ajoutée");
 
             return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('personne/new.html.twig', [
+        return $this->render('personne/new.html.twig', [
             'personne' => $personne,
             'form' => $form,
         ]);
     }
 
-    /**
-     * @Route("/show/{id}", name="app_personne_show", methods={"GET"})
-     */
+    #[Route(path: '/show/{id}', name: 'app_personne_show', methods: ['GET'])]
     public function show(Personne $personne): Response
     {
         return $this->render('personne/show.html.twig', [
@@ -74,10 +70,8 @@ class PersonneController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="app_personne_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, Personne $personne, PersonneRepository $personneRepository): Response
+    #[Route(path: '/{id}/edit', name: 'app_personne_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Personne $personne): Response
     {
         $form = $this->createForm(PersonneType::class, $personne);
         $form->handleRequest($request);
@@ -85,45 +79,40 @@ class PersonneController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-            if($form->get("radioButton")->getViewData() == 0)
-            {
+            if ($form->get("radioButton")->getViewData() == 0) {
                 $personne->setCoach(null);
                 $personne->setJoueur(null);
             }
-            $personneRepository->add($personne, true);
+            $this->personneRepository->add($personne, true);
 
-            $this->addFlash("success","La personne à bien été modifiée");
+            $this->addFlash("success", "La personne à bien été modifiée");
 
             return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('personne/edit.html.twig', [
+        return $this->render('personne/edit.html.twig', [
             'personne' => $personne,
             'form' => $form,
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="app_personne_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Personne $personne, PersonneRepository $personneRepository): Response
+    #[Route(path: '/{id}', name: 'app_personne_delete', methods: ['POST'])]
+    public function delete(Request $request, Personne $personne): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$personne->getId(), $request->request->get('_token'))) {
-            $personneRepository->remove($personne, true);
+        if ($this->isCsrfTokenValid('delete' . $personne->getId(), $request->request->get('_token'))) {
+            $this->personneRepository->remove($personne, true);
 
-            $this->addFlash("success","La personne à bien été supprimée");
+            $this->addFlash("success", "La personne à bien été supprimée");
 
         }
 
         return $this->redirectToRoute('app_personne_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    /**
-     * @Route("/{role}", name="filtreRole", methods={"GET", "POST"})
-     */
-    public function listePersonnesRole(PersonneRepository $personneRepository, $role): Response
+    #[Route(path: '/{role}', name: 'filtreRole', methods: ['GET', 'POST'])]
+    public function listePersonnesRole($role): Response
     {
-        $personnes = $personneRepository->findByRole($role);
+        $personnes = $this->personneRepository->findByRole($role);
         return $this->render('personne/listePersonnesRole.html.twig', [
             'personnes' => $personnes
         ]);

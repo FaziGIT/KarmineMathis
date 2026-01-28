@@ -42,18 +42,18 @@ class JeuRepository extends ServiceEntityRepository
     public function listeJeuxPaginees($libelle=null)
     {
         $query=$this->createQueryBuilder('j');
-                    
+
         if($libelle != null){
             $query->andWhere('j.nom like :libelle')
                   ->setParameter('libelle', "%$libelle%");
         }
-        
+
         $query->orderBy('j.nom','ASC')
               ->getQuery()
               ->getResult();
 
             //   dd($query);
-                    
+
         return $query;
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use DateTime;
 use App\Entity\Competition;
 use App\Entity\Equipe;
 use App\Entity\Jeu;
@@ -24,9 +25,9 @@ class AppFixtures extends Fixture
             $competition = new Competition();
             $competition -> setNom($value[1])
                          ->setStatut($value[2])
-                         ->setDateDebut(new \DateTime($value[3]))
+                         ->setDateDebut(new DateTime($value[3]))
                          ->setGainPossible($value[4])
-                         ->setDateFin(new \DateTime($value[5]));
+                         ->setDateFin(new DateTime($value[5]));
             $manager->persist($competition);
             $this->addReference("competition" . $i,$competition);
         }
@@ -69,7 +70,7 @@ class AppFixtures extends Fixture
                       ->setPseudo($value[3])
                       ->setSexe(intval($value[4]))
                       ->setRole($value[5])
-                      ->setDateNaissance(new \DateTime($value[6]))
+                      ->setDateNaissance(new DateTime($value[6]))
                       ->setNationalite($value[7])
                       ->setImage($value[8])
                       ->setLiquipedia($value[9]);

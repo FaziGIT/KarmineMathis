@@ -10,7 +10,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FiltrePersonneType extends AbstractType
 {
@@ -26,9 +25,7 @@ class FiltrePersonneType extends AbstractType
             ])
             ->add('coach', EntityType::class, [
                 'class'=>Equipe::class,
-                'query_builder'=>function(EquipeRepository $repo){
-                        return $repo->listeEquipeSimple();
-                },
+                'query_builder'=>fn(EquipeRepository $repo) => $repo->listeEquipeSimple(),
                 'choice_label'=>'nom',
                 'placeholder'=>"",
                 'label'=>'Recherche sur le coach de l\'équipe',
@@ -36,9 +33,7 @@ class FiltrePersonneType extends AbstractType
             ])
             ->add('joueur', EntityType::class, [
                 'class'=>Equipe::class,
-                'query_builder'=>function(EquipeRepository $repo){
-                        return $repo->listeEquipeSimple();
-                },
+                'query_builder'=>fn(EquipeRepository $repo) => $repo->listeEquipeSimple(),
                 'choice_label'=>'nom',
                 'placeholder'=>"",
                 'label'=>'Recherche sur le joueur de l\'équipe',
@@ -46,9 +41,7 @@ class FiltrePersonneType extends AbstractType
             ])
             ->add('lesEquipes', EntityType::class, [
                 'class'=>Equipe::class,
-                'query_builder'=>function(EquipeRepository $repo){
-                        return $repo->listeEquipeSimple();
-                },
+                'query_builder'=>fn(EquipeRepository $repo) => $repo->listeEquipeSimple(),
                 'choice_label'=>'nom',
                 'by_reference' => false,
                 'multiple'=>true,
