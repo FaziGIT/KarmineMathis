@@ -2,54 +2,38 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use App\Repository\EquipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=EquipeRepository::class)
- */
+#[ORM\Entity(repositoryClass: EquipeRepository::class)]
 class Equipe
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $nom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $image = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Personne::class, mappedBy="coach")
-     */
+    #[ORM\OneToMany(targetEntity: Personne::class, mappedBy: 'coach')]
     private $leCoach;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Personne::class, mappedBy="joueur")
-     */
+    #[ORM\OneToMany(targetEntity: Personne::class, mappedBy: 'joueur')]
     private $leJoueur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Jeu::class, inversedBy="lesEquipes")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $leJeu;
+    #[ORM\ManyToOne(targetEntity: Jeu::class, inversedBy: 'lesEquipes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Jeu $leJeu = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Competition::class, mappedBy="equipe")
-     */
+    #[ORM\OneToMany(targetEntity: Competition::class, mappedBy: 'equipe')]
     private $competition;
-
 
 
     public function __construct()
@@ -192,6 +176,6 @@ class Equipe
 
     public function __toString(): string
     {
-        return $this->nom;
+        return (string)$this->nom;
     }
 }

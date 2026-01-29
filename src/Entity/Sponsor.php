@@ -2,35 +2,26 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use App\Repository\SponsorRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=SponsorRepository::class)
- */
+#[ORM\Entity(repositoryClass: SponsorRepository::class)]
 class Sponsor
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $image = null;
 
-    /**
-     * @ORM\Column(type="string", length=500)
-     */
-    private $description;
+    #[ORM\Column(type: Types::STRING, length: 500)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $nom = null;
 
     public function getId(): ?int
     {

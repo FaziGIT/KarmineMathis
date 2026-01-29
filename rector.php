@@ -20,6 +20,9 @@ return RectorConfig::configure()
     ->withTypeCoverageLevel(0)
     ->withImportNames(removeUnusedImports: true)
     ->withComposerBased(symfony: true)
+    ->withPreparedSets(
+        doctrineCodeQuality: true,
+    )
     // not for entity
 //    ->withPreparedSets(
 //        deadCode: true,

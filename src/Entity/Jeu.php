@@ -2,46 +2,33 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use App\Repository\JeuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=JeuRepository::class)
- */
+#[ORM\Entity(repositoryClass: JeuRepository::class)]
 class Jeu
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $nom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $image = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Equipe::class, mappedBy="leJeu")
-     */
+    #[ORM\OneToMany(targetEntity: Equipe::class, mappedBy: 'leJeu')]
     private $lesEquipes;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $description;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=CategorieJeu::class, mappedBy="lesJeux")
-     */
+    #[ORM\ManyToMany(targetEntity: CategorieJeu::class, mappedBy: 'lesJeux')]
     private $lesCategories;
 
     public function __construct()

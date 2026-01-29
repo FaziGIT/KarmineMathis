@@ -2,31 +2,24 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use App\Repository\CategorieJeuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=CategorieJeuRepository::class)
- */
+#[ORM\Entity(repositoryClass: CategorieJeuRepository::class)]
 class CategorieJeu
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Jeu::class, inversedBy="lesCategories")
-     */
+    #[ORM\ManyToMany(targetEntity: Jeu::class, inversedBy: 'lesCategories')]
     private $lesJeux;
 
     public function __construct()

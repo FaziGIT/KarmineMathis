@@ -2,77 +2,53 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
+use DateTimeInterface;
 use App\Repository\PersonneRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=PersonneRepository::class)
- */
+#[ORM\Entity(repositoryClass: PersonneRepository::class)]
 class Personne
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $prenom;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $prenom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $nom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     */
-    private $pseudo;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\NotBlank]
+    private ?string $pseudo = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $sexe;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $sexe = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $role;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $role = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $dateNaissance;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?DateTimeInterface $dateNaissance = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nationalite;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $nationalite = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $image = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $liquipedia;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $liquipedia = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Equipe::class, inversedBy="leCoach")
-     */
-    private $coach;
+    #[ORM\ManyToOne(targetEntity: Equipe::class, inversedBy: 'leCoach')]
+    private ?Equipe $coach = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Equipe::class, inversedBy="leJoueur")
-     */
-    private $joueur;
+    #[ORM\ManyToOne(targetEntity: Equipe::class, inversedBy: 'leJoueur')]
+    private ?Equipe $joueur = null;
 
     public function __construct()
     {
@@ -144,12 +120,12 @@ class Personne
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
+    public function getDateNaissance(): ?DateTimeInterface
     {
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $dateNaissance): self
+    public function setDateNaissance(DateTimeInterface $dateNaissance): self
     {
         $this->dateNaissance = $dateNaissance;
 

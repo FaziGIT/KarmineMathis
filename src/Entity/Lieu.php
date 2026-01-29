@@ -2,57 +2,37 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=LieuRepository::class)
- */
+#[ORM\Entity(repositoryClass: LieuRepository::class)]
 class Lieu
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(
-     *      min = 5,
-     *      minMessage = "Le nom de famille de la personne doit comporter au minimum {{ limit }} caractères",
-     * )
-     * @Assert\NotBlank
-     */
-    private $salle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\Length(min: 5, minMessage: 'Le nom de famille de la personne doit comporter au minimum {{ limit }} caractères')]
+    #[Assert\NotBlank]
+    private ?string $salle = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(
-     *      min = 5,
-     *      minMessage = "Le nom de famille de la personne doit comporter au minimum {{ limit }} caractères",
-     * )
-     * @Assert\NotBlank
-     */
-    private $ville;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\Length(min: 5, minMessage: 'Le nom de famille de la personne doit comporter au minimum {{ limit }} caractères')]
+    #[Assert\NotBlank]
+    private ?string $ville = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(
-     *      min = 5,
-     *      minMessage = "Le nom de famille de la personne doit comporter au minimum {{ limit }} caractères",
-     * )
-     * @Assert\NotBlank
-     */
-    private $pays;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\Length(min: 5, minMessage: 'Le nom de famille de la personne doit comporter au minimum {{ limit }} caractères')]
+    #[Assert\NotBlank]
+    private ?string $pays = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Competition::class, mappedBy="lieu")
-     */
+    #[ORM\OneToMany(targetEntity: Competition::class, mappedBy: 'lieu')]
     private $competitions;
 
     public function __construct()
@@ -135,8 +115,8 @@ class Lieu
     {
         return $this->salle . " - " . $this->ville . ", " . $this->pays;
     }
-    
-    public function __toString()
+
+    public function __toString(): string
     {
         return $this->salle . " - " . $this->ville . ", " . $this->pays;
     }

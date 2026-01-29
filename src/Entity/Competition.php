@@ -2,67 +2,46 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
+use DateTimeInterface;
 use App\Repository\CompetitionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use App\Entity\Participer;
 
-/**
- * @ORM\Entity(repositoryClass=CompetitionRepository::class)
- * @UniqueEntity(
-     *      fields={"nom"},
-     *      message="Le nom de cette compétition est déja utilisé")
- */
+#[ORM\Entity(repositoryClass: CompetitionRepository::class)]
+#[UniqueEntity(fields: ['nom'], message: 'Le nom de cette compétition est déja utilisé')]
 class Competition
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $nom;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $nom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $Statut;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $Statut = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $dateDebut;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?DateTimeInterface $dateDebut = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\Regex("/^[0-9\s]*$/")
-     */
-    private $gainPossible;
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Assert\Regex('/^[0-9\s]*$/')]
+    private ?int $gainPossible = null;
 
-    /**
-     * @ORM\Column(type="date")
-     * @Assert\GreaterThanOrEqual(propertyPath="dateDebut")
-     */
-    private $dateFin;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThanOrEqual(propertyPath: 'dateDebut')]
+    private ?DateTimeInterface $dateFin = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Equipe::class, inversedBy="competition")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $equipe;
+    #[ORM\ManyToOne(targetEntity: Equipe::class, inversedBy: 'competition')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Equipe $equipe = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="competitions")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $lieu;
+    #[ORM\ManyToOne(targetEntity: Lieu::class, inversedBy: 'competitions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Lieu $lieu = null;
 
 
 
@@ -95,12 +74,12 @@ class Competition
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
@@ -119,12 +98,12 @@ class Competition
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getDateFin(): ?DateTimeInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
