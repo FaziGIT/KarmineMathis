@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Stringable;
 use Doctrine\DBAL\Types\Types;
 use App\Repository\EquipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EquipeRepository::class)]
-class Equipe
+class Equipe implements Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]

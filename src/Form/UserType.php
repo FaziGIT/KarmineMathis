@@ -52,15 +52,10 @@ class UserType extends AbstractType
             ],
 
             'constraints' => [
-                new Image([
-                    'maxSize' => '4000k',
-                    'maxSizeMessage' => "L'image est trop volumineuse ({{ size }} {{ suffix }}). Le maximum autorisé est de {{ limit }} {{ suffix }}.",
-                    'mimeTypes' => [
-                        'image/jpeg',
-                        'image/png'
-                    ],
-                    'mimeTypesMessage' => "L'extension du fichier est invalide ({{ type }}). Celles autorisés sont : {{ types }}"
-                ])
+                new Image(maxSize: '4000k', mimeTypes: [
+                    'image/jpeg',
+                    'image/png'
+                ], maxSizeMessage: "L'image est trop volumineuse ({{ size }} {{ suffix }}). Le maximum autorisé est de {{ limit }} {{ suffix }}.", mimeTypesMessage: "L'extension du fichier est invalide ({{ type }}). Celles autorisés sont : {{ types }}")
             ],
 
             'mapped'=>false,

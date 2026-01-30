@@ -57,16 +57,11 @@ class RegistrationFormType extends AbstractType
                 ],
 
                 'constraints' => [
-                    new Image([
-                        'maxSize' => '4000k',
-                        'maxSizeMessage' => "L'image est trop volumineuse ({{ size }} {{ suffix }}). Le maximum autorisé est de {{ limit }} {{ suffix }}.",
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                            'image/avif',
-                        ],
-                        'mimeTypesMessage' => "L'extension du fichier est invalide ({{ type }}). Celles autorisés sont : {{ types }}"
-                    ])
+                    new Image(maxSize: '4000k', mimeTypes: [
+                        'image/jpeg',
+                        'image/png',
+                        'image/avif',
+                    ], maxSizeMessage: "L'image est trop volumineuse ({{ size }} {{ suffix }}). Le maximum autorisé est de {{ limit }} {{ suffix }}.", mimeTypesMessage: "L'extension du fichier est invalide ({{ type }}). Celles autorisés sont : {{ types }}")
                 ],
 
                 'mapped'=>false,
@@ -90,9 +85,7 @@ class RegistrationFormType extends AbstractType
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez accepter les conditions générales.',
-                    ]),
+                    new IsTrue(message: 'Vous devez accepter les conditions générales.'),
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
@@ -105,15 +98,8 @@ class RegistrationFormType extends AbstractType
                     'placeholder'=>"1234 (non)"
                 ],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Entrez un mot de passe',
-                    ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit faire au minimum {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
-                    ]),
+                    new NotBlank(message: 'Entrez un mot de passe'),
+                    new Length(min: 6, max: 4096, minMessage: 'Votre mot de passe doit faire au minimum {{ limit }} caractères'),
                 ],
             ])
         ;

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Stringable;
 use Doctrine\DBAL\Types\Types;
 use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
-class Lieu
+class Lieu implements Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -111,7 +112,7 @@ class Lieu
         return $this;
     }
 
-    public function getNomComplet()
+    public function getNomComplet(): string
     {
         return $this->salle . " - " . $this->ville . ", " . $this->pays;
     }
